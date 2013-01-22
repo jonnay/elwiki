@@ -73,7 +73,7 @@
 
   http://localhost:8023/wiki/example
 
-** Stoppiung the wiki
+** Stopping the wiki
 
 #+begin_src emacs-lisp
 (elnode-stop 8023)
