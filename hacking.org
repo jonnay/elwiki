@@ -1,0 +1,80 @@
+#+title: Hacking Elwiki
+#+PROPERTY: results value silent 
+* Why an org file?
+
+  Cause you can open it in emacs, and use ~C-c C-c~ in a source block to
+  execute that source code.  It's awesome.  Basically you can start at
+  the top of this file, and eventually work your way downwards to get a
+  working elwiki installation, so you can start hacking.
+
+* Getting started
+
+** Dependencies
+
+*** TODO add marmalade to the list of elpa repos if needed?
+
+*** Creole 
+
+	You may be able to get away with just executing this source block.
+	I had more issues that I needed to sort out unfortunately.  Either
+	way, make sure you have Creole.
+
+#+begin_src emacs-lisp 
+(package-install 'creole)
+(package-initialize)
+#+end_src   
+
+*** ESXML
+
+#+begin_src emacs-lisp 
+(package-install 'esxml)
+(package-initialize)
+#+end_src   
+
+
+** Loading the packages
+
+  Include the elwiki.el file (this is kinda obvious). 
+
+#+begin_src emacs-lisp
+(load-file "./elwiki-vc.el")
+(load-file "./elwiki.el")
+#+end_src
+
+** Configuration
+
+   My preference is to ~setq~ all my customizations, and stash them
+   all in my org-file.  Rest assured, you can customize these
+   variables if you like.
+
+   The values here assume you are just executing the source blocks
+   directly.  You will want to change some
+
+#+begin_src emacs-lisp
+(setq elwiki-wikiroot (expand-file-name "."))
+(setq elwiki-wiki-name "dev-wiki")
+#+end_src
+
+
+* Launching the wiki
+
+  Super easy, you launch your server with elnode-start, and use the
+  elwiki-server function for the handler:
+
+#+begin_src emacs-lisp
+(elnode-start 'elwiki-server :port 8023 :host "localhost")
+#+end_src
+
+** Static page test 
+  Test it out by going to:
+  http://localhost:8023/static/style.css
+
+** Finally visit your first wiki page!
+
+  http://localhost:8023/wiki/example
+
+** Stoppiung the wiki
+
+#+begin_src emacs-lisp
+(elnode-stop 8023)
+#+end_src
